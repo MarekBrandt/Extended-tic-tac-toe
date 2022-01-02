@@ -32,3 +32,12 @@ class Board:
                     row_to_print += ' | '
                 i += 1
             print(row_to_print)
+        row_to_print = ''
+        print(row_to_print)
+        for _ in range(self.size + (self.size-1)*3):
+            row_to_print += '='
+        print(row_to_print)
+        row_to_print = ''
+        print(row_to_print)
+
+
