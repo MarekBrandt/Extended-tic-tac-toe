@@ -1,4 +1,4 @@
-from dictionaries import field_markings
+from constants import field_markings
 
 
 class Board:
@@ -9,7 +9,7 @@ class Board:
         self.size = size
         self.board = []
         for _ in range(size * size):
-            self.board.append(field_markings['empty'])
+            self.board.append(field_markings.index('empty'))
 
     def show(self):
         for row in range(self.size):
@@ -20,11 +20,11 @@ class Board:
             row_to_print = ""
             i = 0
             for element in row_elements:
-                if element == field_markings.get('empty'):
+                if element == field_markings.index('empty'):
                     row_to_print += ' '
-                elif element == field_markings.get('x'):
+                elif element == field_markings.index('x'):
                     row_to_print += 'X'
-                elif element == field_markings.get('o'):
+                elif element == field_markings.index('o'):
                     row_to_print += 'O'
 
                 # adding | after every element except the last one
