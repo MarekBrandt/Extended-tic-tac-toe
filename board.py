@@ -40,4 +40,7 @@ class Board:
         row_to_print = ''
         print(row_to_print)
 
+    def change_field(self, index, marking):
+        self.board[index] = field_markings.index(marking)
+
 
