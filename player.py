@@ -1,5 +1,5 @@
 import random
-from dictionaries import field_markings
+from constants import field_markings
 
 
 class Player():
