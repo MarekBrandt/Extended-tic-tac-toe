@@ -1,7 +1,3 @@
-import random
-from constants import field_markings
-
-
 class Player:
     """Represents a player"""
 
@@ -10,3 +6,4 @@ class Player:
 
     def make_move(self, board, index):
         board.change_field(index, self.team)
+
