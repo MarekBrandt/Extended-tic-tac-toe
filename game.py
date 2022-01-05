@@ -4,7 +4,7 @@ from constants import field_markings
 import random
 
 
-class Round:
+class Game:
     def __init__(self, size):
         self.board = Board(size)
         team1 = random.randrange(1, 3)
@@ -22,12 +22,18 @@ class Round:
             self.first = self.player2
             self.second = self.player1
 
-    def move(self):
-        self.board.show()
-        self.first.make_move(self.board)
-
-        self.board.show()
-
-        self.second.make_move(self.board)
-
-        self.board.show()
+    def start(self):
+        run = True
+        while run:
+            self.board.show()
+            self.first.make_move(self.board)
+            if self.board.is_not_full():
+                self.board.show()
+                self.second.make_move(self.board)
+                """ To consideration
+                Is it possible that second player will make board full?
+                run = self.board.is_not_full()"""
+            else:
+                self.board.show()
+                print("It's a tie. Well played!")
+                run = False

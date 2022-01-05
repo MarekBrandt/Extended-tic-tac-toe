@@ -43,4 +43,10 @@ class Board:
     def change_field(self, index, marking):
         self.board[index] = field_markings.index(marking)
 
+    def is_not_full(self):
+        if field_markings.index("empty") not in self.board:
+            return False
+        else:
+            return True
+
 

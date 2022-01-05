@@ -1,4 +1,4 @@
-from round import Round
+from game import Game
 
 
 def main():
@@ -16,8 +16,8 @@ def main():
                 print("Try a number in range 3 to 10")
         except ValueError:
             print("You have to type a number")
-    round = Round(size)
-    round.move()
+    game = Game(size)
+    game.start()
 
 
 if __name__ == '__main__':
