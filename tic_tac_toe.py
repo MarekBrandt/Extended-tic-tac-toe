@@ -1,17 +1,23 @@
-from board import Board
-from player import Player
 from round import Round
 
 
 def main():
-    round = Round(3)
+    print("Welcome to Tic-Tac-Toe game.")
+    size = 3
+    run = True
+    while run:
+        size = input("Type the width of the board: ")
+        try:
+            size = int(size)
+            if 3 <= size < 11:
+                print("Creating a board " + str(size) + "x" + str(size))
+                run = False
+            else:
+                print("Try a number in range 3 to 10")
+        except ValueError:
+            print("You have to type a number")
+    round = Round(size)
     round.move()
-    """player1 = Player("o")
-    player2 = Player("x")
-    game_board = Board(3)
-    # player1.make_move(game_board, 4)
-    # player2.make_move(game_board, 8)
-    game_board.show()"""
 
 
 if __name__ == '__main__':

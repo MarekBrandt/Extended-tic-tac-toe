@@ -23,8 +23,11 @@ class Round:
             self.second = self.player1
 
     def move(self):
+        self.board.show()
+        self.first.make_move(self.board)
 
-        self.first.make_move(self.board, 4)
-        self.second.make_move(self.board, 6)
+        self.board.show()
+
+        self.second.make_move(self.board)
 
         self.board.show()
