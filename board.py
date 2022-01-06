@@ -49,4 +49,25 @@ class Board:
         else:
             return True
 
+    def is_victory(self, symbol):
+        symbol = field_markings.index(symbol)
+        win = False
+
+        # checking for the horizontal victory
+        for row in range(self.size):
+            counter = 0
+            for column in range(self.size):
+                if counter == 3:  # victory
+                    break
+                index = row * self.size + column
+                if self.board[index] == symbol:
+                    counter += 1
+                else:
+                    counter = 0
+            if counter == 3:
+                win = True
+                break
+
+        return win
+
 

@@ -4,11 +4,13 @@ from constants import field_markings
 class Player:
     """Represents a player"""
 
-    def __init__(self, team):
+    def __init__(self, team, name):
         self.team = team
+        self.name = name
 
     def make_move(self, board):
         run = True
+        print(self.name + " it\'s your turn")
         while run:
             index = input("Choose a field. Fields are numbered from 1 to "
                           + str(board.size ** 2) + ": ")

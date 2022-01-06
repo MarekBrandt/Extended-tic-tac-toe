@@ -12,8 +12,8 @@ class Game:
             team2 = 2
         else:
             team2 = 1
-        self.player1 = Player(field_markings[team1])
-        self.player2 = Player(field_markings[team2])
+        self.player1 = Player(field_markings[team1], "Player1")
+        self.player2 = Player(field_markings[team2], "Player2")
 
         if self.player1.team == "x":
             self.first = self.player1
@@ -22,18 +22,30 @@ class Game:
             self.first = self.player2
             self.second = self.player1
 
+    def tie(self):
+        self.board.show()
+        print("It's a tie. Well played!")
+        return False
+
     def start(self):
         run = True
+        counter = 0
+        self.board.show()
         while run:
-            self.board.show()
-            self.first.make_move(self.board)
-            if self.board.is_not_full():
-                self.board.show()
-                self.second.make_move(self.board)
-                """ To consideration
-                Is it possible that second player will make board full?
-                run = self.board.is_not_full()"""
+            if counter % 2 == 0:
+                player = self.first
             else:
+                player = self.second
+
+            player.make_move(self.board)
+            if self.board.is_victory(player.team):
                 self.board.show()
-                print("It's a tie. Well played!")
+                print(player.name + " won! Congratulations!")
                 run = False
+            else:
+                if self.board.is_not_full():
+                    self.board.show()
+                else:
+                    run = self.tie()
+
+            counter += 1
