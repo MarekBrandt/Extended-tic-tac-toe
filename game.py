@@ -5,8 +5,10 @@ import random
 
 
 class Game:
+    # __init__ sets variables and starts a game
     def __init__(self, size):
         self.board = Board(size)
+        # every game draw player1 team it can be 'o' or 'x'
         team1 = random.randrange(1, 3)
         if team1 == 1:
             team2 = 2
@@ -22,6 +24,8 @@ class Game:
             self.first = self.player2
             self.second = self.player1
 
+        self.start()
+
     def tie(self):
         self.board.show()
         print("It's a tie. Well played!")
@@ -32,6 +36,7 @@ class Game:
         counter = 0
         self.board.show()
         while run:
+            # if below decides which player should make a move now
             if counter % 2 == 0:
                 player = self.first
             else:

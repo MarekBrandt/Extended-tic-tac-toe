@@ -50,24 +50,73 @@ class Board:
             return True
 
     def is_victory(self, symbol):
-        symbol = field_markings.index(symbol)
-        win = False
+        numb_of_marking = field_markings.index(symbol)
 
-        # checking for the horizontal victory
+        if self.horizontal_win(numb_of_marking) or self.vertical_win(numb_of_marking) \
+                or self.l_diagonal_win(numb_of_marking):
+            win = True
+        else:
+            win = False
+
+        return win
+
+    def horizontal_win(self, numb_of_marking):
+        # checking for the horizontal victory,
+        # numb_of_marking is index of symbol in constants.py
+        win = False
         for row in range(self.size):
             counter = 0
             for column in range(self.size):
                 if counter == 3:  # victory
                     break
                 index = row * self.size + column
-                if self.board[index] == symbol:
+                if self.board[index] == numb_of_marking:
                     counter += 1
                 else:
                     counter = 0
             if counter == 3:
                 win = True
                 break
-
         return win
 
+    def vertical_win(self, numb_of_marking):
+        # checking for the vertical victory,
+        # numb_of_marking is index of symbol in constants.py
+        win = False
+        for column in range(self.size):
+            counter = 0
+            for row in range(self.size):
+                if counter == 3:  # victory
+                    break
+                index = row * self.size + column
+                if self.board[index] == numb_of_marking:
+                    counter += 1
+                else:
+                    counter = 0
+            if counter == 3:
+                win = True
+                break
+        return win
 
+    def l_diagonal_win(self, numb_of_marking):
+        # checking for the diagonal tilted to left (\) victory,
+        # numb_of_marking is index of symbol in constants.py
+        win = False
+
+        row = self.size-1
+        while row >= 0:
+            counter = 0
+            for column in range(self.size - row):
+                if counter == 3:  # victory
+                    break
+                index = (row + column) * self.size + column
+                if self.board[index] == numb_of_marking:
+                    counter += 1
+                else:
+                    counter = 0
+            if counter == 3:
+                win = True
+                break
+            row -= 1
+
+        return win

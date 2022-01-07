@@ -17,7 +17,6 @@ def main():
         except ValueError:
             print("You have to type a number")
     game = Game(size)
-    game.start()
 
 
 if __name__ == '__main__':
