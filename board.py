@@ -12,6 +12,14 @@ class Board:
             self.board.append(field_markings.index('empty'))
 
     def show(self):
+        """
+        line = ""
+        line2 = ""
+        for i in range(self.size):
+            line += "___"
+            line2 += "---"
+        print(line)
+        attempt to add frame to board"""
         for row in range(self.size):
             row_elements = []
             for column in range(self.size):
@@ -49,56 +57,57 @@ class Board:
         else:
             return True
 
-    def is_victory(self, symbol):
+    def is_victory(self, symbol, win_cond):
         numb_of_marking = field_markings.index(symbol)
 
-        if self.horizontal_win(numb_of_marking) or self.vertical_win(numb_of_marking) \
-                or self.l_diagonal_win(numb_of_marking):
+        if self.horizontal_win(numb_of_marking, win_cond) \
+                or self.vertical_win(numb_of_marking, win_cond) \
+                or self.l_diagonal_win(numb_of_marking, win_cond):
             win = True
         else:
             win = False
 
         return win
 
-    def horizontal_win(self, numb_of_marking):
+    def horizontal_win(self, numb_of_marking, win_cond):
         # checking for the horizontal victory,
         # numb_of_marking is index of symbol in constants.py
         win = False
         for row in range(self.size):
             counter = 0
             for column in range(self.size):
-                if counter == 3:  # victory
+                if counter == win_cond:  # victory
                     break
                 index = row * self.size + column
                 if self.board[index] == numb_of_marking:
                     counter += 1
                 else:
                     counter = 0
-            if counter == 3:
+            if counter == win_cond:
                 win = True
                 break
         return win
 
-    def vertical_win(self, numb_of_marking):
+    def vertical_win(self, numb_of_marking, win_cond):
         # checking for the vertical victory,
         # numb_of_marking is index of symbol in constants.py
         win = False
         for column in range(self.size):
             counter = 0
             for row in range(self.size):
-                if counter == 3:  # victory
+                if counter == win_cond:  # victory
                     break
                 index = row * self.size + column
                 if self.board[index] == numb_of_marking:
                     counter += 1
                 else:
                     counter = 0
-            if counter == 3:
+            if counter == win_cond:
                 win = True
                 break
         return win
 
-    def l_diagonal_win(self, numb_of_marking):
+    def l_diagonal_win(self, numb_of_marking, win_cond):
         # checking for the diagonal tilted to left (\) victory,
         # numb_of_marking is index of symbol in constants.py
         # i divide problem on two smaller.
@@ -111,14 +120,14 @@ class Board:
         while row >= 0:
             counter = 0
             for column in range(self.size - row):
-                if counter == 3:  # victory
+                if counter == win_cond:  # victory
                     break
                 index = (row + column) * self.size + column
                 if self.board[index] == numb_of_marking:
                     counter += 1
                 else:
                     counter = 0
-            if counter == 3:
+            if counter == win_cond:
                 win = True
                 break
             row -= 1
@@ -131,14 +140,14 @@ class Board:
             for i in range(self.size-1):
                 counter = 0
                 for column in range(self.size-1 - i):
-                    if counter == 3:  # victory
+                    if counter == win_cond:  # victory
                         break
                     index = (first_row + column) * self.size + first_column + i + column
                     if self.board[index] == numb_of_marking:
                         counter += 1
                     else:
                         counter = 0
-                if counter == 3:
+                if counter == win_cond:
                     win = True
                     break
         return win

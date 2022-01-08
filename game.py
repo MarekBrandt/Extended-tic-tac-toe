@@ -43,7 +43,7 @@ class Game:
                 player = self.second
 
             player.make_move(self.board)
-            if self.board.is_victory(player.team):
+            if self.board.is_victory(player.team, 3):
                 self.board.show()
                 print(player.name + " won! Congratulations!")
                 run = False
