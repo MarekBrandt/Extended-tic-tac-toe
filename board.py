@@ -101,8 +101,12 @@ class Board:
     def l_diagonal_win(self, numb_of_marking):
         # checking for the diagonal tilted to left (\) victory,
         # numb_of_marking is index of symbol in constants.py
+        # i divide problem on two smaller.
+        # first: under main diagonal, including it
+        # second: above main diagonal, not including it
         win = False
 
+        # first problem solution
         row = self.size-1
         while row >= 0:
             counter = 0
@@ -119,4 +123,22 @@ class Board:
                 break
             row -= 1
 
+        # second problem solution
+        # to check, not working
+        if not win:
+            first_row = 0
+            first_column = 1
+            for i in range(self.size-1):
+                counter = 0
+                for column in range(self.size-1 - i):
+                    if counter == 3:  # victory
+                        break
+                    index = (first_row + column) * self.size + first_column + i + column
+                    if self.board[index] == numb_of_marking:
+                        counter += 1
+                    else:
+                        counter = 0
+                if counter == 3:
+                    win = True
+                    break
         return win
