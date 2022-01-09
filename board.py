@@ -36,13 +36,13 @@ class Board:
                     row_to_print += 'O'
 
                 # adding | after every element except the last one
-                if i != len(row_elements)-1:
+                if i != len(row_elements) - 1:
                     row_to_print += ' | '
                 i += 1
             print(row_to_print)
         row_to_print = ''
         print(row_to_print)
-        for _ in range(self.size + (self.size-1)*3):
+        for _ in range(self.size + (self.size - 1) * 3):
             row_to_print += '='
         print(row_to_print)
         row_to_print = ''
@@ -62,7 +62,8 @@ class Board:
 
         if self.horizontal_win(numb_of_marking, win_cond) \
                 or self.vertical_win(numb_of_marking, win_cond) \
-                or self.l_diagonal_win(numb_of_marking, win_cond):
+                or self.l_diagonal_win(numb_of_marking, win_cond) \
+                or self.r_diagonal_win(numb_of_marking, win_cond):
             win = True
         else:
             win = False
@@ -116,7 +117,7 @@ class Board:
         win = False
 
         # first problem solution
-        row = self.size-1
+        row = self.size - 1
         while row >= 0:
             counter = 0
             for column in range(self.size - row):
@@ -137,9 +138,9 @@ class Board:
         if not win:
             first_row = 0
             first_column = 1
-            for i in range(self.size-1):
+            for i in range(self.size - 1):
                 counter = 0
-                for column in range(self.size-1 - i):
+                for column in range(self.size - 1 - i):
                     if counter == win_cond:  # victory
                         break
                     index = (first_row + column) * self.size + first_column + i + column
@@ -150,4 +151,46 @@ class Board:
                 if counter == win_cond:
                     win = True
                     break
+        return win
+
+    def r_diagonal_win(self, numb_of_marking, win_cond):
+        # checking for the diagonal tilted to right (/) victory,
+        # numb_of_marking is index of symbol in constants.py
+        # i divide problem on two smaller.
+        # first: under main diagonal, including it
+        # second: above main diagonal, not including it
+        win = False
+
+        # for upper from main diagonal, including it
+        for diagonal in range(self.size):
+            counter = 0
+            for field in range(diagonal + 1):
+                if counter == win_cond:  # victory
+                    break
+                index = (diagonal - field) * self.size + field
+                if self.board[index] == numb_of_marking:
+                    counter += 1
+                else:
+                    counter = 0
+            if counter == win_cond:
+                win = True
+                break
+
+        # for below main diagonal
+        if not win:
+            starting_row = self.size - 1
+            for diagonal in range(self.size - 1):
+                counter = 0
+                for field in range(starting_row - diagonal):
+                    if counter == win_cond:  # victory
+                        break
+                    index = (starting_row - field) * self.size + diagonal + 1 + field
+                    if self.board[index] == numb_of_marking:
+                        counter += 1
+                    else:
+                        counter = 0
+                if counter == win_cond:
+                    win = True
+                    break
+
         return win
