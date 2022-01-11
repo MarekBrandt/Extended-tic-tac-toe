@@ -79,7 +79,33 @@ def change_win_condition(size):
 
 
 def change_nicknames(nickname1, nickname2):
-    pass  # todo
+    run = True
+    while run:
+        print("First player nickname is " + nickname1)
+        print("Second player nickname is " + nickname2)
+        print()
+        print("1. Change first player nickname")
+        print("2. Change second player nickname")
+        print("3. Return")
+        print()
+        option = input("Choose option: ")
+        try:
+            option = int(option)
+            if 1 <= option <= 3:
+                if option == 1:
+                    nickname1 = change_nickname()
+                elif option == 2:
+                    nickname2 = change_nickname()
+                else:
+                    return nickname1, nickname2
+            else:
+                print("Type correct number")
+        except ValueError:
+            print("Type number")
+
+
+def change_nickname():
+    return input("Type new nickname: ")
 
 
 def main():
@@ -96,7 +122,7 @@ def main():
         elif option == 2:
             size, in_line = change_board_settings(size, in_line)
         elif option == 3:
-            change_nicknames(nickname1, nickname2)
+            nickname1, nickname2 = change_nicknames(nickname1, nickname2)
         else:
             print("Thank you for playing!")
             run = False
