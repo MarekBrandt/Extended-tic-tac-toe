@@ -1,5 +1,6 @@
 from board import Board
 from player import Player
+from computer import Computer
 from constants import field_markings
 import random
 
@@ -16,7 +17,8 @@ class Game:
         else:
             team2 = 1
         self.player1 = Player(field_markings[team1], nickname1)
-        self.player2 = Player(field_markings[team2], nickname2)
+        # self.player2 = Player(field_markings[team2], nickname2)
+        self.player2 = Computer(field_markings[team2], "Computer")
 
         if self.player1.team == "x":
             self.first = self.player1
