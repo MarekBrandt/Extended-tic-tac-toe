@@ -58,6 +58,7 @@ class Board:
         else:
             return True
 
+    # symbol is "x" or "o"
     def is_victory(self, symbol):
         numb_of_marking = field_markings.index(symbol)
 
