@@ -5,15 +5,16 @@ def menu_options():
     print("Welcome to Tic-Tac-Toe game.")
     run = True
     while run:
-        print("1. Play")
-        print("2. Change board settings")
-        print("3. Change players names")
-        print("4. Quit game")
+        print("1. Play with human")
+        print("2. Play with computer")
+        print("3. Change board settings")
+        print("4. Change players names")
+        print("5. Quit game")
         print()
         option = input("Choose option: ")
         try:
             option = int(option)
-            if 1 <= option <= 4:
+            if 1 <= option <= 5:
                 return option
             else:
                 print("That is not correct number!")
@@ -118,10 +119,12 @@ def main():
     while run:
         option = menu_options()
         if option == 1:
-            Game(size, in_line, nickname1, nickname2)
+            Game(size, in_line, nickname1, nickname2, False)
         elif option == 2:
-            size, in_line = change_board_settings(size, in_line)
+            Game(size, in_line, nickname1, nickname2, True)
         elif option == 3:
+            size, in_line = change_board_settings(size, in_line)
+        elif option == 4:
             nickname1, nickname2 = change_nicknames(nickname1, nickname2)
         else:
             print("Thank you for playing!")
