@@ -21,7 +21,7 @@ class Player:
                     print("You can only choose field from 1 to " + str(board.size ** 2) + "!")
                 else:
                     index = index - 1  # now index is starting from 0
-                    if board.board[index] != field_markings.index("empty"):
+                    if board.board_list[index] != field_markings.index("empty"):
                         print("This field is already occupied. Choose empty one!")
                     else:
                         board.change_field(index, self.team)
