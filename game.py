@@ -1,3 +1,4 @@
+import interface
 from board import Board
 from player import Player
 from computer import Computer
@@ -32,7 +33,7 @@ class Game:
 
     def tie(self):
         self.board.show()
-        print("It's a tie. Well played!")
+        interface.act_on_message("tie", self.board, None)
         return False
 
     def start(self):
@@ -49,7 +50,7 @@ class Game:
             player.make_move(self.board)
             if self.board.is_victory(player.team):
                 self.board.show()
-                print(player.name + " playing " + player.team.upper() + " won! Congratulations!")
+                interface.act_on_message("victory", self.board, player)
                 run = False
             else:
                 if self.board.is_not_full():
