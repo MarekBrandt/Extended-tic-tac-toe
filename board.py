@@ -59,7 +59,26 @@ class Board:
             return True
 
     # symbol is "x" or "o"
-    def is_victory(self, symbol):
+    # returns 0 for tie, 1 for x victory and 2 for o victory
+    def is_victory(self):
+        # is full == tie
+        if not self.is_not_full():
+            return 0
+        for k, symbol in enumerate(['x', 'o']):
+            numb_of_marking = field_markings.index(symbol)
+
+            if self.horizontal_win(numb_of_marking) \
+                    or self.vertical_win(numb_of_marking) \
+                    or self.l_diagonal_win(numb_of_marking) \
+                    or self.r_diagonal_win(numb_of_marking):
+                win = True
+            else:
+                win = False
+
+            if win:
+                return k+1
+
+    def is_victory2(self, symbol):
         numb_of_marking = field_markings.index(symbol)
 
         if self.horizontal_win(numb_of_marking) \

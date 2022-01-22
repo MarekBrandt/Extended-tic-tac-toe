@@ -48,7 +48,7 @@ class Game:
                 player = self.second
 
             player.make_move(self.board)
-            if self.board.is_victory(player.team):
+            if self.board.is_victory() == field_markings.index(player.team):
                 self.board.show()
                 interface.act_on_message("victory", self.board, player)
                 run = False

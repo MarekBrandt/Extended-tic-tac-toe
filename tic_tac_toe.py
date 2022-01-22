@@ -38,7 +38,7 @@ def change_board_settings(size, in_line):
             option = int(option)
             if 1 <= option <= 3:
                 if option == 1:
-                    size = change_board_size()
+                    size = change_board_size(in_line)
                 elif option == 2:
                     in_line = change_win_condition(size)
                 else:
@@ -49,13 +49,13 @@ def change_board_settings(size, in_line):
             print("Type number")
 
 
-def change_board_size():
+def change_board_size(win_cond):
     run = True
     while run:
         new_size = input("Type size of the board: ")
         try:
             new_size = int(new_size)
-            if 3 <= new_size < 11:
+            if win_cond <= new_size < 11:
                 print("Actual board size is " + str(new_size) + "x" + str(new_size))
                 return new_size
             else:

@@ -5,7 +5,8 @@ messages = [
     "occupied field",
     "value error",
     "victory",
-    "tie"
+    "tie",
+    ""
 ]
 
 
