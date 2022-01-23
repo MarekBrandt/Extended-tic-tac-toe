@@ -16,34 +16,62 @@ class Computer(Player):
         "tie": 0
     }
 
-    def minimax(self, board, depth, is_maximising):
+    def minimax(self, board, depth, is_maximising, max_depth):
         if self.team == 'o':
             comp_team = 'o'
             player_team = 'x'
         else:
             comp_team = 'x'
             player_team = 'o'
+        result = board.is_victory()
         # check if one of the players is winning
-        if is_maximising and board.is_victory(comp_team):
-            score = 1
-        elif not is_maximising and board.is_victory(player_team):
-            score = -1
-        return score
+        if is_maximising and result == field_markings.index(comp_team):
+            score = 1/depth
+            return score
+        elif not is_maximising and result == field_markings.index(player_team):
+            score = -1/depth
+            return score
+        # check if tie
+        if result == 0 or depth == max_depth:
+            return 0
 
-    def make_move2(self, board):
+        empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
+
+        if is_maximising:
+            best_score = -math.inf
+            for field in empty_fields:
+                board.change_field(field, comp_team)
+                score = self.minimax(board, depth+1, False, max_depth)
+                board.change_field(field, 'empty')
+                best_score = max(best_score, score)
+            return best_score
+
+        else:
+            best_score = math.inf
+            for field in empty_fields:
+                board.change_field(field, player_team)
+                score = self.minimax(board, depth+1, True, max_depth)
+                board.change_field(field, 'empty')
+                best_score = min(best_score, score)
+            return best_score
+
+    def make_move(self, board):
         best_score = -math.inf
         best_move = 0
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
         for field in empty_fields:
             board.change_field(field, self.team)
-            score = self.minimax(board,self.team, 0, False)
+            score = self.minimax(board, 0, False, 3)
             board.change_field(field, 'empty')
             if score > best_score:
                 best_score = score
                 best_move = field
-        board.change_field(best_move, self.team)
+        if best_score == 0:
+            board.change_field(random.choice(empty_fields), self.team)
+        else:
+            board.change_field(best_move, self.team)
 
-    def make_move(self, board):
+    def make_move2(self, board):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
         # print("fields that are empty")
         # print(empty_fields)
