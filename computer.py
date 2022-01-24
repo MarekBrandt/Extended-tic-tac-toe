@@ -25,10 +25,10 @@ class Computer(Player):
             player_team = 'o'
         result = board.is_victory()
         # check if one of the players is winning
-        if is_maximising and result == field_markings.index(comp_team):
+        if result == field_markings.index(comp_team):
             score = 1/depth
             return score
-        elif not is_maximising and result == field_markings.index(player_team):
+        elif result == field_markings.index(player_team):
             score = -1/depth
             return score
         # check if tie
@@ -61,15 +61,15 @@ class Computer(Player):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
         for field in empty_fields:
             board.change_field(field, self.team)
-            score = self.minimax(board, 0, False, 3)
+            score = self.minimax(board, 0, False, 4)
             board.change_field(field, 'empty')
             if score > best_score:
                 best_score = score
                 best_move = field
-        if best_score == 0:
-            board.change_field(random.choice(empty_fields), self.team)
-        else:
-            board.change_field(best_move, self.team)
+        #if best_score == 0:
+        #    board.change_field(random.choice(empty_fields), self.team)
+        #else:
+        board.change_field(best_move, self.team)
 
     def make_move2(self, board):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
