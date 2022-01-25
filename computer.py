@@ -58,18 +58,23 @@ class Computer(Player):
     def make_move(self, board):
         best_score = -math.inf
         best_move = 0
+        best_fields = []
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
         for field in empty_fields:
             board.change_field(field, self.team)
-            score = self.minimax(board, 0, False, 4)
+            score = self.minimax(board, 1, False, 3)
             board.change_field(field, 'empty')
             if score > best_score:
+                best_fields = [field]
                 best_score = score
                 best_move = field
+            elif score == best_score:
+                best_fields.append(field)
         #if best_score == 0:
         #    board.change_field(random.choice(empty_fields), self.team)
         #else:
-        board.change_field(best_move, self.team)
+        board.change_field(random.choice(best_fields), self.team)
+        #board.change_field(best_move, self.team)
 
     def make_move2(self, board):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
