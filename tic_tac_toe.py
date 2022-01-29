@@ -1,5 +1,16 @@
 from game import Game
+import pygame as pg
+import constants
+WIN = pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
 
+
+def draw_menu():
+    font = pg.font.Font(None, 32)
+    color = pg.Color((255, 255, 255))
+    txt_surface = font.render("Welcome to Tic-Tac-Toe game.", True, color)
+    WIN.blit(txt_surface, (100, 100))
+
+    pg.display.flip()
 
 def menu_options():
     print("Welcome to Tic-Tac-Toe game.")
@@ -115,20 +126,37 @@ def main():
     nickname1 = "Player1"
     nickname2 = "Player2"
 
+    clock = pg.time.Clock()
+    pg.display.set_caption("Tic tac toe")
+
+    pg.init()
+
     run = True
     while run:
-        option = menu_options()
-        if option == 1:
-            Game(size, in_line, nickname1, nickname2, False)
-        elif option == 2:
-            Game(size, in_line, nickname1, nickname2, True)
-        elif option == 3:
-            size, in_line = change_board_settings(size, in_line)
-        elif option == 4:
-            nickname1, nickname2 = change_nicknames(nickname1, nickname2)
-        else:
-            print("Thank you for playing!")
-            run = False
+        draw_menu()
+        clock.tick(constants.FPS)
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                run = False
+                # todo teraz musisz zrobić menu w pygame, bo to nie zadziała
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                pos = pg.mouse.get_pos()
+
+        """else:
+                option = menu_options()
+                if option == 1:
+                    Game(size, in_line, nickname1, nickname2, False)
+                elif option == 2:
+                    Game(size, in_line, nickname1, nickname2, True)
+                elif option == 3:
+                    size, in_line = change_board_settings(size, in_line)
+                elif option == 4:
+                    nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+                else:
+                    print("Thank you for playing!")
+                    run = False"""
+    pg.quit()
 
 
 if __name__ == '__main__':
