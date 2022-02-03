@@ -1,16 +1,23 @@
+import sys
+
 from game import Game
 import pygame as pg
 import constants
+
 WIN = pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
+clock = pg.time.Clock()
 
 
-def draw_menu():
+def draw_menu(rectangles):
     font = pg.font.Font(None, 32)
     color = pg.Color((255, 255, 255))
     txt_surface = font.render("Welcome to Tic-Tac-Toe game.", True, color)
     WIN.blit(txt_surface, (100, 100))
 
+    for i in range(len(rectangles)):
+        pg.draw.rect(WIN, color, rectangles[i])
     pg.display.flip()
+
 
 def menu_options():
     print("Welcome to Tic-Tac-Toe game.")
@@ -126,22 +133,46 @@ def main():
     nickname1 = "Player1"
     nickname2 = "Player2"
 
-    clock = pg.time.Clock()
     pg.display.set_caption("Tic tac toe")
 
     pg.init()
 
+    rectangles = []
+    menu_items_no = 6
+    for i in range(1, menu_items_no + 1):
+        y = 70
+        width = constants.WIDTH / 2
+        height = constants.HEIGHT / (menu_items_no + 5)
+        x = constants.WIDTH / 4  # WIDTH/2 - width/2
+        rectangles.append(pg.Rect(x, i * y + 30, width, height))
+
     run = True
+    click = True
     while run:
-        draw_menu()
-        clock.tick(constants.FPS)
+        draw_menu(rectangles)
+        pos = pg.mouse.get_pos()
+        if click:
+            if rectangles[1].collidepoint(pos):
+                Game(WIN, size, in_line, nickname1, nickname2, False)
+            elif rectangles[2].collidepoint(pos):
+                Game(WIN, size, in_line, nickname1, nickname2, True)
+            elif rectangles[3].collidepoint(pos):
+                size, in_line = change_board_settings(size, in_line)
+            elif rectangles[4].collidepoint(pos):
+                nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+            elif rectangles[5].collidepoint(pos):
+                pg.quit()
+                sys.exit()
+        click = False
         for event in pg.event.get():
             if event.type == pg.QUIT:
-                run = False
+                pg.quit()
+                sys.exit()
                 # todo teraz musisz zrobić menu w pygame, bo to nie zadziała
 
             if event.type == pg.MOUSEBUTTONDOWN:
-                pos = pg.mouse.get_pos()
+                click = True
+            clock.tick(constants.FPS)
 
         """else:
                 option = menu_options()

@@ -3,12 +3,15 @@ from board import Board
 from player import Player
 from computer import Computer
 from constants import field_markings
+import pygame as pg
+import sys
 import random
 
 
 class Game:
     # __init__ sets variables and starts a game
-    def __init__(self, size, in_line, nickname1, nickname2, game_with_ai):
+    def __init__(self, WIN, size, in_line, nickname1, nickname2, game_with_ai):
+        self.WIN = WIN
         self.board = Board(size, in_line)
         # every game draw player1 team it can be 'o' or 'x'
         team1 = random.randrange(1, 3)
@@ -32,29 +35,35 @@ class Game:
         self.start()
 
     def tie(self):
-        self.board.show()
+        self.board.show(self.WIN)
         interface.act_on_message("tie", self.board, None)
         return False
 
     def start(self):
         run = True
         counter = 0
-        self.board.show()
+        self.board.show(self.WIN)
         while run:
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                if event.type == pg.K_ESCAPE:
+                    run = False
             # if below decides which player should make a move now
             if counter % 2 == 0:
                 player = self.first
             else:
                 player = self.second
 
-            player.make_move(self.board)
+            """player.make_move(self.board)"""
             if self.board.is_victory() == field_markings.index(player.team):
-                self.board.show()
+                self.board.show(self.WIN)
                 interface.act_on_message("victory", self.board, player)
                 run = False
             else:
                 if self.board.is_not_full():
-                    self.board.show()
+                    self.board.show(self.WIN)
                 else:
                     run = self.tie()
 

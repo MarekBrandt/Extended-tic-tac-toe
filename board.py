@@ -1,4 +1,9 @@
+import random
+
 from constants import field_markings
+from constants import WIDTH
+from constants import HEIGHT
+import pygame as pg
 
 
 class Board:
@@ -8,25 +13,40 @@ class Board:
         """Initialize board which width is size"""
         self.size = size
         self.win_cond = in_line
-        self.board_list = []
+        self.board_list = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
-    def show(self):
-        """
-        line = ""
-        line2 = ""
+        rectangles = []
+        x = 100
+        y = 100
+        edge = 100
         for i in range(self.size):
-            line += "___"
-            line2 += "---"
-        print(line)
-        attempt to add frame to board"""
+            for j in range(self.size):
+                rectangles.append(pg.Rect(x + j * (edge + 10), y + i * (edge + 10), edge, edge))
+        self.rectangles = rectangles
+
+    def show(self, WIN):
+        WIN.fill((0, 0, 0))
+
+        color = pg.Color((255, 255, 255))
+
         for row in range(self.size):
             row_elements = []
             for column in range(self.size):
                 index = row * self.size + column
-                row_elements.append(self.board_list[index])
-            row_to_print = ""
+                pg.draw.rect(WIN, color, self.rectangles[index])
+                font = pg.font.Font(None, 50)
+                if self.board_list[index] == field_markings.index('x'):
+                    text = font.render("X", True, (0, 0, 0))
+                    WIN.blit(text, self.rectangles[index])
+                elif self.board_list[index] == field_markings.index('o'):
+                    text = font.render("O", True, (0, 0, 0))
+                    WIN.blit(text, self.rectangles[index])
+
+               # row_elements.append(self.board_list[index])
+                # todo blit text on rectangles here
+            """row_to_print = ""
             i = 0
             for element in row_elements:
                 if element == field_markings.index('empty'):
@@ -47,7 +67,9 @@ class Board:
             row_to_print += '='
         print(row_to_print)
         row_to_print = ''
-        print(row_to_print)
+        print(row_to_print)"""
+
+        pg.display.update()
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)
@@ -76,7 +98,7 @@ class Board:
                 win = False
 
             if win:
-                return k+1
+                return k + 1
 
     def is_victory2(self, symbol):
         numb_of_marking = field_markings.index(symbol)
