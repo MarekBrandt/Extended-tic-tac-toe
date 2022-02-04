@@ -75,6 +75,7 @@ class Computer(Player):
         #else:
         board.change_field(random.choice(best_fields), self.team)
         #board.change_field(best_move, self.team)
+        return True
 
     def make_move2(self, board):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]

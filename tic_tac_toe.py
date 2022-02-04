@@ -9,6 +9,7 @@ clock = pg.time.Clock()
 
 
 def draw_menu(rectangles):
+    WIN.fill((0, 0, 0))
     font = pg.font.Font(None, 32)
     color = pg.Color((255, 255, 255))
     txt_surface = font.render("Welcome to Tic-Tac-Toe game.", True, color)
@@ -16,7 +17,8 @@ def draw_menu(rectangles):
 
     for i in range(len(rectangles)):
         pg.draw.rect(WIN, color, rectangles[i])
-    pg.display.flip()
+    print("drawing menu")
+    pg.display.update()
 
 
 def menu_options():
@@ -147,7 +149,7 @@ def main():
         rectangles.append(pg.Rect(x, i * y + 30, width, height))
 
     run = True
-    click = True
+    click = False
     while run:
         draw_menu(rectangles)
         pos = pg.mouse.get_pos()
@@ -172,7 +174,8 @@ def main():
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 click = True
-            clock.tick(constants.FPS)
+
+        clock.tick(constants.FPS)
 
         """else:
                 option = menu_options()
@@ -187,7 +190,6 @@ def main():
                 else:
                     print("Thank you for playing!")
                     run = False"""
-    pg.quit()
 
 
 if __name__ == '__main__':

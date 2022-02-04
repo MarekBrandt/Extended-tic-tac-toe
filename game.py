@@ -1,3 +1,4 @@
+import constants
 import interface
 from board import Board
 from player import Player
@@ -44,19 +45,14 @@ class Game:
         counter = 0
         self.board.show(self.WIN)
         while run:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    pg.quit()
-                    sys.exit()
-                if event.type == pg.K_ESCAPE:
-                    run = False
             # if below decides which player should make a move now
             if counter % 2 == 0:
                 player = self.first
             else:
                 player = self.second
 
-            """player.make_move(self.board)"""
+            if not player.make_move(self.board):
+                run = False
             if self.board.is_victory() == field_markings.index(player.team):
                 self.board.show(self.WIN)
                 interface.act_on_message("victory", self.board, player)
@@ -66,5 +62,12 @@ class Game:
                     self.board.show(self.WIN)
                 else:
                     run = self.tie()
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    pg.quit()
+                    sys.exit()
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_ESCAPE:
+                        run = False
 
             counter += 1

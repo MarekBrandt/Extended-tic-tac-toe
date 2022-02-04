@@ -13,18 +13,17 @@ class Board:
         """Initialize board which width is size"""
         self.size = size
         self.win_cond = in_line
-        self.board_list = ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x']
+        self.board_list = []
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
-        rectangles = []
+        self.rectangles = []
         x = 100
         y = 100
         edge = 100
         for i in range(self.size):
             for j in range(self.size):
-                rectangles.append(pg.Rect(x + j * (edge + 10), y + i * (edge + 10), edge, edge))
-        self.rectangles = rectangles
+                self.rectangles.append(pg.Rect(x + j * (edge + 10), y + i * (edge + 10), edge, edge))
 
     def show(self, WIN):
         WIN.fill((0, 0, 0))
@@ -32,7 +31,6 @@ class Board:
         color = pg.Color((255, 255, 255))
 
         for row in range(self.size):
-            row_elements = []
             for column in range(self.size):
                 index = row * self.size + column
                 pg.draw.rect(WIN, color, self.rectangles[index])
@@ -68,8 +66,9 @@ class Board:
         print(row_to_print)
         row_to_print = ''
         print(row_to_print)"""
-
+        print("drawing board")
         pg.display.update()
+
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)
