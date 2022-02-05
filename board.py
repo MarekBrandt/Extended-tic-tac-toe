@@ -42,8 +42,8 @@ class Board:
                     text = font.render("O", True, (0, 0, 0))
                     WIN.blit(text, self.rectangles[index])
 
-               # row_elements.append(self.board_list[index])
-                # todo blit text on rectangles here
+            # row_elements.append(self.board_list[index])
+           
             """row_to_print = ""
             i = 0
             for element in row_elements:
@@ -66,9 +66,7 @@ class Board:
         print(row_to_print)
         row_to_print = ''
         print(row_to_print)"""
-        print("drawing board")
         pg.display.update()
-
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)

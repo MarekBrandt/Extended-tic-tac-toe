@@ -17,6 +17,12 @@ main_menu_text = [
     "Quit"
 ]
 
+options_menu_text = [
+    "  ",
+    "   ",
+    "Quit"
+]
+
 
 def act_on_message(message, board, player):
     message_id = messages.index(message)

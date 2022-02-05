@@ -1,24 +1,68 @@
 import sys
-
 from game import Game
 import pygame as pg
 import constants
 from constants import COLORS
-from interface import main_menu_text
+from interface import main_menu_text, options_menu_text
 
 WIN = pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
 clock = pg.time.Clock()
 
 
-def draw_main_menu(rectangles):
+# fract_width argument is the fraction of app window screen
+def rects_for_menu(no_of_butt, fract_WIDTH=(2 / 3), gap=30, button_height=60):
+    rectangles = []
+
+    # total height is sum of buttons height and gaps between them
+    rects_height = no_of_butt * button_height + (no_of_butt - 1) * gap
+    width = constants.WIDTH * fract_WIDTH
+    x = constants.WIDTH / 2 - width / 2  # WIDTH/2 - width/2
+    y_start = constants.HEIGHT/2 - rects_height/2
+    for i in range(no_of_butt):
+        y = i * (button_height + gap) + y_start
+        rectangles.append(pg.Rect(x, y, width, button_height))
+
+    return rectangles
+
+
+def draw_menu(rectangles, which_menu):
     WIN.fill(COLORS['black'])
     font = pg.font.Font(None, 32)
-
+    txt_surface = ''
     for i in range(len(rectangles)):
         pg.draw.rect(WIN, COLORS['white'], rectangles[i])
-        txt_surface = font.render(main_menu_text[i], True, COLORS['black'])
+        if which_menu == 'main':
+            txt_surface = font.render(main_menu_text[i], True, COLORS['black'])
+        elif which_menu == 'options':
+            txt_surface = font.render(options_menu_text[i], True, COLORS['black'])
         WIN.blit(txt_surface, rectangles[i])
     pg.display.update()
+
+
+def options(size, in_line, nickname1, nickname2):
+    rectangles = rects_for_menu(3)
+    run = True
+    click = False
+    while run:
+        draw_menu(rectangles, 'options')
+        pos = pg.mouse.get_pos()
+        if click:
+            if rectangles[0].collidepoint(pos):
+                size, in_line = change_board_settings(size, in_line)
+            elif rectangles[1].collidepoint(pos):
+                nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+            elif rectangles[2].collidepoint(pos):
+                run = False
+        click = False
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                click = True
+
+        clock.tick(constants.FPS)
 
 
 def menu_options():
@@ -139,22 +183,12 @@ def main():
 
     pg.init()
 
-    rectangles = []
-    menu_items_no = 5
-    for i in range(1, menu_items_no + 1):
-        y = 70
-        width = constants.WIDTH * 2/3
-        height = constants.HEIGHT / (menu_items_no + 5)
-        x = constants.WIDTH / 2 - width/2  # WIDTH/2 - width/2
-       # if i != 1:
-        rectangles.append(pg.Rect(x, i * y + 30, width, height))
-        #else:
-           # rectangles.append(pg.Rect(x-30, i * y + 30, width + 60, height))
+    rectangles = rects_for_menu(5)
 
     run = True
     click = False
     while run:
-        draw_main_menu(rectangles)
+        draw_menu(rectangles, 'main')
         pos = pg.mouse.get_pos()
         if click:
             if rectangles[1].collidepoint(pos):
@@ -162,9 +196,10 @@ def main():
             elif rectangles[2].collidepoint(pos):
                 Game(WIN, size, in_line, nickname1, nickname2, True)
             elif rectangles[3].collidepoint(pos):
-                size, in_line = change_board_settings(size, in_line)
-            #elif rectangles[4].collidepoint(pos):
-               # nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+                options(size, in_line, nickname1, nickname2)
+                # size, in_line = change_board_settings(size, in_line)
+            # elif rectangles[4].collidepoint(pos):
+            # nickname1, nickname2 = change_nicknames(nickname1, nickname2)
             elif rectangles[4].collidepoint(pos):
                 pg.quit()
                 sys.exit()
@@ -173,7 +208,6 @@ def main():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
-                # todo teraz musisz zrobić menu w pygame, bo to nie zadziała
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 click = True
