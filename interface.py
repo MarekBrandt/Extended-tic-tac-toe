@@ -9,6 +9,14 @@ messages = [
     ""
 ]
 
+main_menu_text = [
+    "Welcome to Tic-Tac-Toe game",
+    "Play with friend",
+    "Play with AI",
+    "Options",
+    "Quit"
+]
+
 
 def act_on_message(message, board, player):
     message_id = messages.index(message)

@@ -3,21 +3,21 @@ import sys
 from game import Game
 import pygame as pg
 import constants
+from constants import COLORS
+from interface import main_menu_text
 
 WIN = pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
 clock = pg.time.Clock()
 
 
-def draw_menu(rectangles):
-    WIN.fill((0, 0, 0))
+def draw_main_menu(rectangles):
+    WIN.fill(COLORS['black'])
     font = pg.font.Font(None, 32)
-    color = pg.Color((255, 255, 255))
-    txt_surface = font.render("Welcome to Tic-Tac-Toe game.", True, color)
-    WIN.blit(txt_surface, (100, 100))
 
     for i in range(len(rectangles)):
-        pg.draw.rect(WIN, color, rectangles[i])
-    print("drawing menu")
+        pg.draw.rect(WIN, COLORS['white'], rectangles[i])
+        txt_surface = font.render(main_menu_text[i], True, COLORS['black'])
+        WIN.blit(txt_surface, rectangles[i])
     pg.display.update()
 
 
@@ -140,18 +140,21 @@ def main():
     pg.init()
 
     rectangles = []
-    menu_items_no = 6
+    menu_items_no = 5
     for i in range(1, menu_items_no + 1):
         y = 70
-        width = constants.WIDTH / 2
+        width = constants.WIDTH * 2/3
         height = constants.HEIGHT / (menu_items_no + 5)
-        x = constants.WIDTH / 4  # WIDTH/2 - width/2
+        x = constants.WIDTH / 2 - width/2  # WIDTH/2 - width/2
+       # if i != 1:
         rectangles.append(pg.Rect(x, i * y + 30, width, height))
+        #else:
+           # rectangles.append(pg.Rect(x-30, i * y + 30, width + 60, height))
 
     run = True
     click = False
     while run:
-        draw_menu(rectangles)
+        draw_main_menu(rectangles)
         pos = pg.mouse.get_pos()
         if click:
             if rectangles[1].collidepoint(pos):
@@ -160,9 +163,9 @@ def main():
                 Game(WIN, size, in_line, nickname1, nickname2, True)
             elif rectangles[3].collidepoint(pos):
                 size, in_line = change_board_settings(size, in_line)
+            #elif rectangles[4].collidepoint(pos):
+               # nickname1, nickname2 = change_nicknames(nickname1, nickname2)
             elif rectangles[4].collidepoint(pos):
-                nickname1, nickname2 = change_nicknames(nickname1, nickname2)
-            elif rectangles[5].collidepoint(pos):
                 pg.quit()
                 sys.exit()
         click = False
