@@ -18,9 +18,18 @@ main_menu_text = [
 ]
 
 options_menu_text = [
-    "  ",
-    "   ",
-    "Quit"
+    "Options",
+    "Board settings",
+    "Change nicknames",
+    "Return"
+]
+
+board_settings_menu_text = [
+    "Board settings",
+    "Actual values:",
+    "Size of the board",
+    "Win condition",
+    "Return"
 ]
 
 

@@ -3,7 +3,7 @@ from game import Game
 import pygame as pg
 import constants
 from constants import COLORS
-from interface import main_menu_text, options_menu_text
+from interface import main_menu_text, options_menu_text, board_settings_menu_text
 
 WIN = pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
 clock = pg.time.Clock()
@@ -17,7 +17,7 @@ def rects_for_menu(no_of_butt, fract_WIDTH=(2 / 3), gap=30, button_height=60):
     rects_height = no_of_butt * button_height + (no_of_butt - 1) * gap
     width = constants.WIDTH * fract_WIDTH
     x = constants.WIDTH / 2 - width / 2  # WIDTH/2 - width/2
-    y_start = constants.HEIGHT/2 - rects_height/2
+    y_start = constants.HEIGHT / 2 - rects_height / 2
     for i in range(no_of_butt):
         y = i * (button_height + gap) + y_start
         rectangles.append(pg.Rect(x, y, width, button_height))
@@ -27,31 +27,64 @@ def rects_for_menu(no_of_butt, fract_WIDTH=(2 / 3), gap=30, button_height=60):
 
 def draw_menu(rectangles, which_menu):
     WIN.fill(COLORS['black'])
-    font = pg.font.Font(None, 32)
+    buttons_font = pg.font.Font(None, 32)
+    caption = pg.font.Font(None, 40)
     txt_surface = ''
     for i in range(len(rectangles)):
+        if i == 0:
+            font = caption
+        else:
+            font = buttons_font
         pg.draw.rect(WIN, COLORS['white'], rectangles[i])
         if which_menu == 'main':
             txt_surface = font.render(main_menu_text[i], True, COLORS['black'])
         elif which_menu == 'options':
             txt_surface = font.render(options_menu_text[i], True, COLORS['black'])
+        elif which_menu == 'board_set':
+            txt_surface = font.render(board_settings_menu_text[i], True, COLORS['black'])
         WIN.blit(txt_surface, rectangles[i])
     pg.display.update()
 
 
 def options(size, in_line, nickname1, nickname2):
-    rectangles = rects_for_menu(3)
+    rectangles = rects_for_menu(4)
     run = True
     click = False
     while run:
         draw_menu(rectangles, 'options')
         pos = pg.mouse.get_pos()
         if click:
-            if rectangles[0].collidepoint(pos):
-                size, in_line = change_board_settings(size, in_line)
-            elif rectangles[1].collidepoint(pos):
-                nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+            if rectangles[1].collidepoint(pos):
+                board_settings(size, in_line)
             elif rectangles[2].collidepoint(pos):
+                nickname1, nickname2 = change_nicknames(nickname1, nickname2)
+            elif rectangles[3].collidepoint(pos):
+                run = False
+        click = False
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                click = True
+
+        clock.tick(constants.FPS)
+
+
+def board_settings(size, in_line):
+    rectangles = rects_for_menu(5)
+    run = True
+    click = False
+    while run:
+        draw_menu(rectangles, 'board_set')
+        pos = pg.mouse.get_pos()
+        if click:
+            if rectangles[2].collidepoint(pos):
+                pass
+            elif rectangles[3].collidepoint(pos):
+                pass
+            elif rectangles[4].collidepoint(pos):
                 run = False
         click = False
         for event in pg.event.get():

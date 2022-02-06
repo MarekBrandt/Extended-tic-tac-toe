@@ -43,7 +43,7 @@ class Board:
                     WIN.blit(text, self.rectangles[index])
 
             # row_elements.append(self.board_list[index])
-           
+
             """row_to_print = ""
             i = 0
             for element in row_elements:
