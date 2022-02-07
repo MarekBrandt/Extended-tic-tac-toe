@@ -26,9 +26,8 @@ options_menu_text = [
 
 board_settings_menu_text = [
     "Board settings",
-    "Actual values:",
-    "Size of the board",
-    "Win condition",
+    "Size of the board: ",
+    "Win condition: ",
     "Return"
 ]
 

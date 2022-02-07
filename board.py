@@ -17,6 +17,7 @@ class Board:
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
+        # todo make this responsive
         self.rectangles = []
         x = 100
         y = 100

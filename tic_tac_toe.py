@@ -55,11 +55,11 @@ def options(size, in_line, nickname1, nickname2):
         pos = pg.mouse.get_pos()
         if click:
             if rectangles[1].collidepoint(pos):
-                board_settings(size, in_line)
+                size, in_line = board_settings(size, in_line)
             elif rectangles[2].collidepoint(pos):
                 nickname1, nickname2 = change_nicknames(nickname1, nickname2)
             elif rectangles[3].collidepoint(pos):
-                run = False
+                return size, in_line, nickname1, nickname2
         click = False
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -73,19 +73,31 @@ def options(size, in_line, nickname1, nickname2):
 
 
 def board_settings(size, in_line):
-    rectangles = rects_for_menu(5)
+    rectangles = rects_for_menu(4)
     run = True
     click = False
     while run:
+        # takes text displayed in button concatenates to it size of the board
+        tokens = board_settings_menu_text[1].split(': ')
+        board_settings_menu_text[1] = tokens[0]+': ' + str(size)
+
+        # takes text displayed in button concatenates to it win condition
+        tokens = board_settings_menu_text[2].split(': ')
+        board_settings_menu_text[2] = tokens[0] + ': ' + str(in_line)
+
         draw_menu(rectangles, 'board_set')
         pos = pg.mouse.get_pos()
         if click:
-            if rectangles[2].collidepoint(pos):
-                pass
+            if rectangles[1].collidepoint(pos):
+                size += 1
+                if size > 10:
+                    size = 3
+            elif rectangles[2].collidepoint(pos):
+                in_line += 1
+                if in_line > 10:
+                    in_line = 3
             elif rectangles[3].collidepoint(pos):
-                pass
-            elif rectangles[4].collidepoint(pos):
-                run = False
+                return size, in_line
         click = False
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -229,7 +241,7 @@ def main():
             elif rectangles[2].collidepoint(pos):
                 Game(WIN, size, in_line, nickname1, nickname2, True)
             elif rectangles[3].collidepoint(pos):
-                options(size, in_line, nickname1, nickname2)
+                size, in_line, nickname1, nickname2 = options(size, in_line, nickname1, nickname2)
                 # size, in_line = change_board_settings(size, in_line)
             # elif rectangles[4].collidepoint(pos):
             # nickname1, nickname2 = change_nicknames(nickname1, nickname2)

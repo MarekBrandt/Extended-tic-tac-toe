@@ -75,6 +75,7 @@ class Computer(Player):
         #else:
         board.change_field(random.choice(best_fields), self.team)
         #board.change_field(best_move, self.team)
+        #board.change_field(best_move, self.team)
         return True
 
     def make_move2(self, board):
