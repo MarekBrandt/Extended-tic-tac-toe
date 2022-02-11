@@ -42,26 +42,32 @@ class Game:
 
     def start(self):
         run = True
+        in_game = True
         counter = 0
         self.board.show(self.WIN)
         while run:
-            # if below decides which player should make a move now
-            if counter % 2 == 0:
-                player = self.first
-            else:
-                player = self.second
-
-            if not player.make_move(self.board):
-                run = False
-            if self.board.is_victory() == field_markings.index(player.team):
-                self.board.show(self.WIN)
-                interface.act_on_message("victory", self.board, player)
-                run = False
-            else:
-                if self.board.is_not_full():
-                    self.board.show(self.WIN)
+            if in_game:
+                # if below decides which player should make a move now
+                if counter % 2 == 0:
+                    player = self.first
                 else:
-                    run = self.tie()
+                    player = self.second
+
+                if not player.make_move(self.board):
+                    run = False
+                if self.board.is_victory() == field_markings.index(player.team):
+                    self.board.show(self.WIN)
+                    interface.act_on_message("victory", self.board, player)
+                    #run = False
+                    in_game = False
+                else:
+                    if self.board.is_not_full():
+                        self.board.show(self.WIN)
+                    else:
+                        #run = self.tie()
+                        in_game = False
+            else:
+                self.board.show(self.WIN)
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()
@@ -69,5 +75,7 @@ class Game:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_ESCAPE:
                         run = False
+                if event.type == pg.MOUSEBUTTONDOWN and not in_game:
+                    run = False
 
             counter += 1

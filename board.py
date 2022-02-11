@@ -42,10 +42,14 @@ class Board:
                 elif self.board_list[index] == field_markings.index('o'):
                     text = font.render("O", True, (0, 0, 0))
                     WIN.blit(text, self.rectangles[index])
+        pg.display.update()
 
-            # row_elements.append(self.board_list[index])
-
-            """row_to_print = ""
+        for row in range(self.size):
+            row_elements = []
+            for column in range(self.size):
+                index = row * self.size + column
+                row_elements.append(self.board_list[index])
+            row_to_print = ""
             i = 0
             for element in row_elements:
                 if element == field_markings.index('empty'):
@@ -66,8 +70,7 @@ class Board:
             row_to_print += '='
         print(row_to_print)
         row_to_print = ''
-        print(row_to_print)"""
-        pg.display.update()
+        print(row_to_print)
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)
@@ -81,9 +84,6 @@ class Board:
     # symbol is "x" or "o"
     # returns 0 for tie, 1 for x victory and 2 for o victory
     def is_victory(self):
-        # is full == tie
-        if not self.is_not_full():
-            return 0
         for k, symbol in enumerate(['x', 'o']):
             numb_of_marking = field_markings.index(symbol)
 
@@ -97,6 +97,9 @@ class Board:
 
             if win:
                 return k + 1
+        # is full == tie
+        if not self.is_not_full():
+            return 0
 
     def is_victory2(self, symbol):
         numb_of_marking = field_markings.index(symbol)
