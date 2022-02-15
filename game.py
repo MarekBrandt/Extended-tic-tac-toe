@@ -53,8 +53,12 @@ class Game:
                 else:
                     player = self.second
 
-                if not player.make_move(self.board):
-                    run = False
+                #if not player.make_move(self.board):
+                    #run = False
+                if self.board.size <= 3:
+                    run = player.make_move(self.board)
+                else:
+                    run = player.make_move2(self.board)
                 if self.board.is_victory() == field_markings.index(player.team):
                     self.board.show(self.WIN)
                     interface.act_on_message("victory", self.board, player)

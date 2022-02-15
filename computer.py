@@ -143,7 +143,7 @@ class Computer(Player):
         return best_score, index
 
     def make_move3(self, board):
-        score, index = self.minimax_alpha_beta(board, True, -10, 10)
+        score, index = self.max_alpha_beta(board, -10, 10)
         board.change_field(index, self.team)
         """best_score = -2
         best_move = 0
@@ -183,7 +183,7 @@ class Computer(Player):
             score = -1 / depth
             return score
         # check if tie
-        if result == 0:  # or depth == max_depth:
+        if result == 0 or depth == max_depth:
             return 0
 
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
@@ -264,7 +264,7 @@ class Computer(Player):
                 # print("winning fields for "+symbol)
                 # print(winning_fields)
                 board.change_field(random.choice(winning_fields), self.team)
-                return
+                return True
 
         # checking if there is a chance to win with two moves
         # if not, checking if opponent can win with two moves, and blocks it
@@ -293,7 +293,7 @@ class Computer(Player):
                 # print("fields that can make a line for "+symbol)
                 # print(good_fields)
                 board.change_field(random.choice(good_fields), self.team)
-                return
+                return True
 
         board.change_field(random.choice(empty_fields), self.team)
         return True

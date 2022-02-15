@@ -59,3 +59,6 @@ class Player:
                 interface.act_on_message("value error", board, self)
 """
         return ret_value
+
+    def make_move2(self, board):
+        return self.make_move(board)

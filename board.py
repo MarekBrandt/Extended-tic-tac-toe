@@ -44,7 +44,7 @@ class Board:
                     WIN.blit(text, self.rectangles[index])
         pg.display.update()
 
-        for row in range(self.size):
+        """for row in range(self.size):
             row_elements = []
             for column in range(self.size):
                 index = row * self.size + column
@@ -70,7 +70,7 @@ class Board:
             row_to_print += '='
         print(row_to_print)
         row_to_print = ''
-        print(row_to_print)
+        print(row_to_print)"""
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)
