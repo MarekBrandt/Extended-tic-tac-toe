@@ -17,31 +17,44 @@ class Board:
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
-        # todo make this responsive
+        # only fraction of height, cause top of the screen is place to show messages
+        HEIGHT2 = 0.8 * HEIGHT
+        board_width = 0.8 * min(WIDTH, HEIGHT2)
+        tile_gap_size = board_width / self.size  # how big can be tile with gap alongside
+        tile_size = 4 / 5 * tile_gap_size
+        gap_size = tile_gap_size - tile_size
         self.rectangles = []
-        x = 100
-        y = 100
-        edge = 100
+
+        x_offset = WIDTH / 2 - board_width / 2
+        y_offset = -HEIGHT2 / 2 - board_width / 2 + HEIGHT
+
         for i in range(self.size):
             for j in range(self.size):
-                self.rectangles.append(pg.Rect(x + j * (edge + 10), y + i * (edge + 10), edge, edge))
+                self.rectangles.append(pg.Rect(x_offset + j * tile_gap_size + gap_size / 2,
+                                               y_offset + i * tile_gap_size + gap_size / 2,
+                                               tile_size, tile_size))
 
     def show(self, WIN):
         WIN.fill((0, 0, 0))
-
+        font = pg.font.Font(None, int(400 / self.size))
         color = pg.Color((255, 255, 255))
 
         for row in range(self.size):
             for column in range(self.size):
+                text = font.render("", True, (0, 0, 0))
                 index = row * self.size + column
                 pg.draw.rect(WIN, color, self.rectangles[index])
-                font = pg.font.Font(None, 50)
                 if self.board_list[index] == field_markings.index('x'):
                     text = font.render("X", True, (0, 0, 0))
-                    WIN.blit(text, self.rectangles[index])
                 elif self.board_list[index] == field_markings.index('o'):
                     text = font.render("O", True, (0, 0, 0))
-                    WIN.blit(text, self.rectangles[index])
+
+                text_width = text.get_width()
+                text_height = text.get_height()
+                text_x = self.rectangles[index].width / 2 - text_width / 2
+                text_y = self.rectangles[index].height / 2 - text_height / 2
+
+                WIN.blit(text, (self.rectangles[index].x + text_x, self.rectangles[index].y + text_y))
         pg.display.update()
 
         """for row in range(self.size):
