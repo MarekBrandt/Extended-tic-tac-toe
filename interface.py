@@ -31,6 +31,8 @@ board_settings_menu_text = [
     "Return"
 ]
 
+board_message = ""
+
 
 def act_on_message(message, board, player):
     message_id = messages.index(message)

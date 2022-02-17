@@ -1,8 +1,10 @@
 import random
 
+import interface
 from constants import field_markings
 from constants import WIDTH
 from constants import HEIGHT
+from interface import board_message
 import pygame as pg
 
 
@@ -17,8 +19,10 @@ class Board:
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
+
+
         # only fraction of height, cause top of the screen is place to show messages
-        HEIGHT2 = 0.8 * HEIGHT
+        HEIGHT2 = 0.9 * HEIGHT
         board_width = 0.8 * min(WIDTH, HEIGHT2)
         tile_gap_size = board_width / self.size  # how big can be tile with gap alongside
         tile_size = 4 / 5 * tile_gap_size
@@ -33,11 +37,26 @@ class Board:
                 self.rectangles.append(pg.Rect(x_offset + j * tile_gap_size + gap_size / 2,
                                                y_offset + i * tile_gap_size + gap_size / 2,
                                                tile_size, tile_size))
+        message_width = 0.9 * WIDTH
+        message_height = HEIGHT - HEIGHT2
+        message_x = WIDTH/2 - message_width/2
+        message_y = 0
+        self.message_box = pg.Rect(message_x, message_y, message_width, message_height)
 
     def show(self, WIN):
         WIN.fill((0, 0, 0))
         font = pg.font.Font(None, int(400 / self.size))
+        font2 = pg.font.Font(None, 50)
         color = pg.Color((255, 255, 255))
+
+        message = font2.render(interface.board_message, True, (255, 255, 0))
+        text_width = message.get_width()
+        text_height = message.get_height()
+        text_x = self.message_box.width / 2 - text_width / 2 + self.message_box.x
+        text_y = self.message_box.height / 2 + self.message_box.y
+
+        # pg.draw.rect(WIN, color, (text_x, text_y, text_width, text_height))
+        WIN.blit(message, (text_x, text_y, text_width, text_height))
 
         for row in range(self.size):
             for column in range(self.size):

@@ -37,14 +37,13 @@ class Game:
 
     def tie(self):
         self.board.show(self.WIN)
-        interface.act_on_message("tie", self.board, None)
+        #interface.act_on_message("tie", self.board, None)
         return False
 
     def start(self):
         run = True
         in_game = True
         counter = 0
-        self.board.show(self.WIN)
         while run:
             if in_game:
                 # if below decides which player should make a move now
@@ -55,19 +54,25 @@ class Game:
 
                 #if not player.make_move(self.board):
                     #run = False
+                # minimax algorithm for small boards
+                #interface.act_on_message("your turn", board, self)
+                interface.board_message = player.name + " your move"
+                self.board.show(self.WIN)
                 if self.board.size <= 3:
                     run = player.make_move(self.board)
                 else:
                     run = player.make_move2(self.board)
                 if self.board.is_victory() == field_markings.index(player.team):
                     self.board.show(self.WIN)
-                    interface.act_on_message("victory", self.board, player)
+                    interface.board_message = "Victory! " + player.name + " won!"
+                    #interface.act_on_message("victory", self.board, player)
                     #run = False
                     in_game = False
                 else:
                     if self.board.is_not_full():
                         self.board.show(self.WIN)
                     else:
+                        interface.board_message = "It's a tie. Well played"
                         #run = self.tie()
                         in_game = False
             else:
@@ -83,3 +88,4 @@ class Game:
                     run = False
 
             counter += 1
+        interface.board_message = ""

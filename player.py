@@ -17,7 +17,6 @@ class Player:
         run = True
         click = False
         ret_value = True
-        interface.act_on_message("your turn", board, self)
         while run:
             pos = pg.mouse.get_pos()
             if click:
