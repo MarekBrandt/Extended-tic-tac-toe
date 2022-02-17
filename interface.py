@@ -31,6 +31,13 @@ board_settings_menu_text = [
     "Return"
 ]
 
+change_nicknames_menu_text = [
+    "Nicknames",
+    "Player 1: ",
+    "Player 2: ",
+    "Return"
+]
+
 board_message = ""
 
 
