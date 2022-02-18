@@ -25,7 +25,7 @@ def rects_for_menu(no_of_butt, fract_WIDTH=(2 / 3), gap=30, button_height=60):
     return rectangles
 
 
-def draw_menu(rectangles, which_menu):
+def draw_menu(rectangles, which_menu, highlighted = []):
     WIN.fill(COLORS['black'])
     buttons_font = pg.font.Font(None, 32)
     caption = pg.font.Font(None, 40)
@@ -35,7 +35,10 @@ def draw_menu(rectangles, which_menu):
             font = caption
         else:
             font = buttons_font
-        pg.draw.rect(WIN, COLORS['white'], rectangles[i])
+        if i in highlighted:
+            pg.draw.rect(WIN, COLORS['light_blue'], rectangles[i])
+        else:
+            pg.draw.rect(WIN, COLORS['white'], rectangles[i])
         if which_menu == 'main':
             txt_surface = font.render(main_menu_text[i], True, COLORS['black'])
         elif which_menu == 'options':
@@ -150,25 +153,25 @@ def change_nicknames_menu(nickname1, nickname2):
 
 
 def changing_nickname(nickname1, nickname2, which):
-    if which == 0:
-        new_nicks = ["", nickname2]
-    else:
-        new_nicks = [nickname1, ""]
+    old_nicks = [nickname1, nickname2]
+    nicks = [nickname1[:], nickname2[:]]
     rectangles = rects_for_menu(4)
     run = True
     click = False
     while run:
         # takes text displayed in button concatenates to it size of the board
         tokens = change_nicknames_menu_text[1].split(': ')
-        change_nicknames_menu_text[1] = tokens[0] + ': ' + new_nicks[0]
+        change_nicknames_menu_text[1] = tokens[0] + ': ' + nicks[0]
 
         # takes text displayed in button concatenates to it win condition
         tokens = change_nicknames_menu_text[2].split(': ')
-        change_nicknames_menu_text[2] = tokens[0] + ': ' + new_nicks[1]
+        change_nicknames_menu_text[2] = tokens[0] + ': ' + nicks[1]
 
-        draw_menu(rectangles, 'change_nick')
+        draw_menu(rectangles, 'change_nick', [which+1])
         if click:
-            return new_nicks[which]
+            if not nicks[which]:
+                return old_nicks[which]
+            return nicks[which]
         click = False
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -179,11 +182,17 @@ def changing_nickname(nickname1, nickname2, which):
                 click = True
 
             if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return old_nicks[which]
+                if event.key == pg.K_KP_ENTER:
+                    if not nicks[which]:
+                        return old_nicks[which]
+                    return nicks[which]
                 if event.key == pg.K_BACKSPACE:
-                    if new_nicks[which]:
-                        new_nicks[which] = new_nicks[which][:-1]
+                    if nicks[which]:
+                        nicks[which] = nicks[which][:-1]
                 else:
-                    new_nicks[which] += event.unicode
+                    nicks[which] += event.unicode
 
         clock.tick(constants.FPS)
 
