@@ -6,5 +6,6 @@ FPS = 60
 COLORS = {
     'white': (255, 255, 255),
     'black': (0, 0, 0),
-    'light_blue': (173, 216, 230)
+    'light_blue': (173, 216, 230),
+    'yellow': (255, 255, 0)
 }

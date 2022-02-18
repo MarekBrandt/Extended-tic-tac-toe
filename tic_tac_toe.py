@@ -188,7 +188,7 @@ def changing_nickname(nickname1, nickname2, which):
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_ESCAPE:
                     return old_nicks[which]
-                if event.key == pg.K_KP_ENTER:
+                if event.key == pg.K_RETURN:
                     if not nicks[which]:
                         return old_nicks[which]
                     return nicks[which]

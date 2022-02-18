@@ -1,7 +1,7 @@
 import random
 
 import interface
-from constants import field_markings
+from constants import field_markings, COLORS
 from constants import WIDTH
 from constants import HEIGHT
 from interface import board_message
@@ -44,12 +44,12 @@ class Board:
         self.message_box = pg.Rect(message_x, message_y, message_width, message_height)
 
     def show(self, WIN):
-        WIN.fill((0, 0, 0))
+        WIN.fill(COLORS['black'])
         font = pg.font.Font(None, int(400 / self.size))
         font2 = pg.font.Font(None, 50)
-        color = pg.Color((255, 255, 255))
+        color = pg.Color(COLORS['white'])
 
-        message = font2.render(interface.board_message, True, (255, 255, 0))
+        message = font2.render(interface.board_message, True, COLORS['yellow'])
         text_width = message.get_width()
         text_height = message.get_height()
         text_x = self.message_box.width / 2 - text_width / 2 + self.message_box.x
