@@ -47,7 +47,11 @@ def draw_menu(rectangles, which_menu, highlighted = []):
             txt_surface = font.render(board_settings_menu_text[i], True, COLORS['black'])
         elif which_menu == 'change_nick':
             txt_surface = font.render(change_nicknames_menu_text[i], True, COLORS['black'])
-        WIN.blit(txt_surface, rectangles[i])
+
+        txt_x = rectangles[i].width/2 - txt_surface.get_width()/2 + rectangles[i].x
+        txt_y = rectangles[i].height/2 - txt_surface.get_height()/2 + rectangles[i].y
+
+        WIN.blit(txt_surface, (txt_x, txt_y, txt_surface.get_width(), txt_surface.get_height()))
     pg.display.update()
 
 
