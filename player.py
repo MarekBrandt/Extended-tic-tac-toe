@@ -1,5 +1,4 @@
 import sys
-
 import constants
 import pygame as pg
 import interface
@@ -40,24 +39,8 @@ class Player:
                         run = False
             clock.tick(constants.FPS)
 
-
-            """index = interface.act_on_message("choose field", board, self)
-            try:
-                index = int(index)
-
-                if index < 1 or index > board.size ** 2:
-                    interface.act_on_message("non-existing field", board, self)
-                else:
-                    index = index - 1  # now index is starting from 0
-                    if board.board_list[index] != field_markings.index("empty"):
-                        interface.act_on_message("occupied field", board, self)
-                    else:
-                        board.change_field(index, self.team)
-                        run = False
-            except ValueError:
-                interface.act_on_message("value error", board, self)
-"""
         return ret_value
 
+    # make_move2 is different only for AI
     def make_move2(self, board):
         return self.make_move(board)

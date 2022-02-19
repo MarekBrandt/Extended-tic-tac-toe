@@ -4,7 +4,6 @@ import interface
 from constants import field_markings, COLORS
 from constants import WIDTH
 from constants import HEIGHT
-from interface import board_message
 import pygame as pg
 
 
@@ -75,34 +74,6 @@ class Board:
 
                 WIN.blit(text, (self.rectangles[index].x + text_x, self.rectangles[index].y + text_y))
         pg.display.update()
-
-        """for row in range(self.size):
-            row_elements = []
-            for column in range(self.size):
-                index = row * self.size + column
-                row_elements.append(self.board_list[index])
-            row_to_print = ""
-            i = 0
-            for element in row_elements:
-                if element == field_markings.index('empty'):
-                    row_to_print += ' '
-                elif element == field_markings.index('x'):
-                    row_to_print += 'X'
-                elif element == field_markings.index('o'):
-                    row_to_print += 'O'
-
-                # adding | after every element except the last one
-                if i != len(row_elements) - 1:
-                    row_to_print += ' | '
-                i += 1
-            print(row_to_print)
-        row_to_print = ''
-        print(row_to_print)
-        for _ in range(self.size + (self.size - 1) * 3):
-            row_to_print += '='
-        print(row_to_print)
-        row_to_print = ''
-        print(row_to_print)"""
 
     def change_field(self, index, marking):
         self.board_list[index] = field_markings.index(marking)

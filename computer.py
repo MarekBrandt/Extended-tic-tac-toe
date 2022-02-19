@@ -1,7 +1,6 @@
 import math
 import random
 from board import Board
-
 from player import Player
 from constants import field_markings
 
@@ -70,8 +69,6 @@ class Computer(Player):
 
     def make_move2(self, board):
         empty_fields = [x for x, field in enumerate(board.board_list) if field == field_markings.index("empty")]
-        # print("fields that are empty")
-        # print(empty_fields)
         if self.team == 'o':
             comp_team = 'o'
             player_team = 'x'
@@ -121,8 +118,6 @@ class Computer(Player):
                         del board_copy
                 del empty_fields2[0]
             if good_fields:
-                # print("fields that can make a line for "+symbol)
-                # print(good_fields)
                 board.change_field(random.choice(good_fields), self.team)
                 return True
 

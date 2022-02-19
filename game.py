@@ -1,4 +1,3 @@
-import constants
 import interface
 from board import Board
 from player import Player
@@ -10,7 +9,6 @@ import random
 
 
 class Game:
-    # __init__ sets variables and starts a game
     def __init__(self, WIN, size, in_line, nickname1, nickname2, game_with_ai):
         self.WIN = WIN
         self.board = Board(size, in_line)
@@ -37,12 +35,11 @@ class Game:
 
     def tie(self):
         self.board.show(self.WIN)
-        #interface.act_on_message("tie", self.board, None)
         return False
 
     def start(self):
-        run = True
-        in_game = True
+        run = True  # the game screen is shown
+        in_game = True  # represents if game is played at the moment
         counter = 0
         while run:
             if in_game:
@@ -52,12 +49,9 @@ class Game:
                 else:
                     player = self.second
 
-                #if not player.make_move(self.board):
-                    #run = False
-                # minimax algorithm for small boards
-                #interface.act_on_message("your turn", board, self)
                 interface.board_message = player.name + " your move"
                 self.board.show(self.WIN)
+
                 if self.board.size <= 3:
                     run = player.make_move(self.board)
                 else:
@@ -65,15 +59,12 @@ class Game:
                 if self.board.is_victory() == field_markings.index(player.team):
                     self.board.show(self.WIN)
                     interface.board_message = "Victory! " + player.name + " won!"
-                    #interface.act_on_message("victory", self.board, player)
-                    #run = False
                     in_game = False
                 else:
                     if self.board.is_not_full():
                         self.board.show(self.WIN)
                     else:
                         interface.board_message = "It's a tie. Well played"
-                        #run = self.tie()
                         in_game = False
             else:
                 self.board.show(self.WIN)
