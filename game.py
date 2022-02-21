@@ -10,8 +10,7 @@ import random
 
 class Game:
     def __init__(self, WIN, size, in_line, nickname1, nickname2, game_with_ai):
-        self.WIN = WIN
-        self.board = Board(size, in_line)
+        self.board = Board(size, in_line, WIN)
         # every game draw player1 team it can be 'o' or 'x'
         team1 = random.randrange(1, 3)
         if team1 == 1:
@@ -34,7 +33,7 @@ class Game:
         self.start()
 
     def tie(self):
-        self.board.show(self.WIN)
+        self.board.show()
         return False
 
     def start(self):
@@ -50,24 +49,24 @@ class Game:
                     player = self.second
 
                 interface.board_message = player.name + " your move"
-                self.board.show(self.WIN)
+                self.board.show()
 
                 if self.board.size <= 3:
                     run = player.make_move(self.board)
                 else:
                     run = player.make_move2(self.board)
                 if self.board.is_victory() == field_markings.index(player.team):
-                    self.board.show(self.WIN)
+                    self.board.show()
                     interface.board_message = "Victory! " + player.name + " won!"
                     in_game = False
                 else:
                     if self.board.is_not_full():
-                        self.board.show(self.WIN)
+                        self.board.show()
                     else:
                         interface.board_message = "It's a tie. Well played"
                         in_game = False
             else:
-                self.board.show(self.WIN)
+                self.board.show()
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     pg.quit()

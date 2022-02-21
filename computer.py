@@ -80,7 +80,7 @@ class Computer(Player):
         for symbol in [comp_team, player_team]:
             winning_fields = []
             for field in empty_fields:
-                board_copy = Board(board.size, board.win_cond)
+                board_copy = Board(board.size, board.win_cond, board.WINDOW)
                 board_copy.board_list = board.board_list[:]
 
                 board_copy.change_field(field, symbol)
@@ -106,7 +106,7 @@ class Computer(Player):
             for first_field in empty_fields3:
                 for second_field in empty_fields2:
                     if second_field != first_field:
-                        board_copy = Board(board.size, board.win_cond)
+                        board_copy = Board(board.size, board.win_cond, board.WINDOW)
                         board_copy.board_list = board.board_list[:]
 
                         board_copy.change_field(first_field, symbol)

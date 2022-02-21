@@ -2,16 +2,16 @@ import random
 
 import interface
 from constants import field_markings, COLORS
-from constants import WIDTH
-from constants import HEIGHT
+import constants
 import pygame as pg
 
 
 class Board:
     """Represent a game board"""
 
-    def __init__(self, size, in_line):
+    def __init__(self, size, in_line, WIN):
         """Initialize board which width is size"""
+        self.WINDOW = WIN
         self.size = size
         self.win_cond = in_line
         self.board_list = []
@@ -21,29 +21,30 @@ class Board:
 
 
         # only fraction of height, cause top of the screen is place to show messages
-        HEIGHT2 = 0.9 * HEIGHT
-        board_width = 0.8 * min(WIDTH, HEIGHT2)
+        HEIGHT2 = 0.9 * constants.HEIGHT
+        board_width = 0.8 * min(constants.HEIGHT, HEIGHT2)
         tile_gap_size = board_width / self.size  # how big can be tile with gap alongside
         tile_size = 4 / 5 * tile_gap_size
         gap_size = tile_gap_size - tile_size
         self.rectangles = []
 
-        x_offset = WIDTH / 2 - board_width / 2
-        y_offset = -HEIGHT2 / 2 - board_width / 2 + HEIGHT
+        x_offset = constants.WIDTH / 2 - board_width / 2
+        print("jestem liczony a widht wynosi" + str(constants.WIDTH))
+        y_offset = -HEIGHT2 / 2 - board_width / 2 + constants.HEIGHT
 
         for i in range(self.size):
             for j in range(self.size):
                 self.rectangles.append(pg.Rect(x_offset + j * tile_gap_size + gap_size / 2,
                                                y_offset + i * tile_gap_size + gap_size / 2,
                                                tile_size, tile_size))
-        message_width = 0.9 * WIDTH
-        message_height = HEIGHT - HEIGHT2
-        message_x = WIDTH/2 - message_width/2
+        message_width = 0.9 * constants.WIDTH
+        message_height = constants.HEIGHT - HEIGHT2
+        message_x = constants.WIDTH/2 - message_width/2
         message_y = 0
         self.message_box = pg.Rect(message_x, message_y, message_width, message_height)
 
-    def show(self, WIN):
-        WIN.fill(COLORS['black'])
+    def show(self):
+        self.WINDOW.fill(COLORS['black'])
         font = pg.font.Font(None, int(400 / self.size))
         font2 = pg.font.Font(None, 50)
         color = pg.Color(COLORS['white'])
@@ -55,13 +56,13 @@ class Board:
         text_y = self.message_box.height / 2 + self.message_box.y
 
         # pg.draw.rect(WIN, color, (text_x, text_y, text_width, text_height))
-        WIN.blit(message, (text_x, text_y, text_width, text_height))
+        self.WINDOW.blit(message, (text_x, text_y, text_width, text_height))
 
         for row in range(self.size):
             for column in range(self.size):
                 text = font.render("", True, (0, 0, 0))
                 index = row * self.size + column
-                pg.draw.rect(WIN, color, self.rectangles[index])
+                pg.draw.rect(self.WINDOW, color, self.rectangles[index])
                 if self.board_list[index] == field_markings.index('x'):
                     text = font.render("X", True, (0, 0, 0))
                 elif self.board_list[index] == field_markings.index('o'):
@@ -72,7 +73,7 @@ class Board:
                 text_x = self.rectangles[index].width / 2 - text_width / 2
                 text_y = self.rectangles[index].height / 2 - text_height / 2
 
-                WIN.blit(text, (self.rectangles[index].x + text_x, self.rectangles[index].y + text_y))
+                self.WINDOW.blit(text, (self.rectangles[index].x + text_x, self.rectangles[index].y + text_y))
         pg.display.update()
 
     def change_field(self, index, marking):

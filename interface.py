@@ -10,6 +10,15 @@ options_menu_text = [
     "Options",
     "Board settings",
     "Change nicknames",
+    "Resolution",
+    "Return"
+]
+
+resolutions_menu_text = [
+    "Resolutions",
+    "600x600 - default",
+    "720x480",
+    "1280x720",
     "Return"
 ]
 

@@ -9,7 +9,7 @@ clock = pg.time.Clock()
 
 
 def options(size, in_line, nickname1, nickname2):
-    menu = Menus(WIN, 'options', [4])
+    menu = Menus(WIN, 'options')
     run = True
     click = False
     while run:
@@ -22,14 +22,64 @@ def options(size, in_line, nickname1, nickname2):
             # nicknames
             elif menu.rectangles[2].collidepoint(pos):
                 nickname1, nickname2 = change_nicknames_menu(nickname1, nickname2)
-            # quit
+            # resolution
             elif menu.rectangles[3].collidepoint(pos):
+                if change_resolution():
+                    pg.display.set_mode((constants.WIDTH, constants.HEIGHT))
+                    main()
+            # quit
+            elif menu.rectangles[4].collidepoint(pos):
                 return size, in_line, nickname1, nickname2
         click = False
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return size, in_line, nickname1, nickname2
+
+            if event.type == pg.MOUSEBUTTONDOWN:
+                click = True
+
+        clock.tick(constants.FPS)
+
+
+def change_resolution():
+    menu = Menus(WIN, 'resolution')
+    run = True
+    click = False
+    while run:
+        menu.draw()
+        pos = pg.mouse.get_pos()
+        if click:
+            # 600x600
+            if menu.rectangles[1].collidepoint(pos):
+                constants.WIDTH = 600
+                constants.HEIGHT = 600
+                return 1
+            if menu.rectangles[2].collidepoint(pos):
+                constants.WIDTH = 720
+                constants.HEIGHT = 480
+                return 1
+            if menu.rectangles[3].collidepoint(pos):
+                constants.WIDTH = 1280
+                constants.HEIGHT = 720
+                return 1
+
+            # quit
+            elif menu.rectangles[4].collidepoint(pos):
+                run = False
+        click = False
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                pg.quit()
+                sys.exit()
+
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    run = False
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 click = True
@@ -38,7 +88,7 @@ def options(size, in_line, nickname1, nickname2):
 
 
 def board_settings(size, in_line):
-    menu = Menus(WIN, 'board_set', [4])
+    menu = Menus(WIN, 'board_set')
     run = True
     click = False
     while run:
@@ -68,6 +118,9 @@ def board_settings(size, in_line):
             if event.type == pg.QUIT:
                 pg.quit()
                 sys.exit()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return size, in_line
 
             if event.type == pg.MOUSEBUTTONDOWN:
                 click = True
@@ -76,7 +129,7 @@ def board_settings(size, in_line):
 
 
 def change_nicknames_menu(nickname1, nickname2):
-    menu = Menus(WIN, 'change_nick', [4])
+    menu = Menus(WIN, 'change_nick')
     run = True
     click = False
     while run:
@@ -103,6 +156,10 @@ def change_nicknames_menu(nickname1, nickname2):
                 pg.quit()
                 sys.exit()
 
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_ESCAPE:
+                    return nickname1, nickname2
+
             if event.type == pg.MOUSEBUTTONDOWN:
                 click = True
 
@@ -112,7 +169,7 @@ def change_nicknames_menu(nickname1, nickname2):
 def changing_nickname(nickname1, nickname2, which):
     old_nicks = [nickname1, nickname2]
     nicks = [nickname1[:], nickname2[:]]
-    menu = Menus(WIN, 'change_nick', [4])
+    menu = Menus(WIN, 'change_nick')
     run = True
     click = False
     while run:
@@ -164,7 +221,7 @@ def main():
 
     pg.init()
 
-    menu = Menus(WIN, 'main', [5])
+    menu = Menus(WIN, 'main')
 
     run = True
     click = False

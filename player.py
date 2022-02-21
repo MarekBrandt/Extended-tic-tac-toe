@@ -22,7 +22,8 @@ class Player:
                 for i, rect in enumerate(board.rectangles):
                     if rect.collidepoint(pos):
                         if board.board_list[i] != constants.field_markings.index("empty"):
-                            interface.act_on_message("non-existing field", board, self)
+                            interface.board_message = "This field is occupied"
+                            board.show()
                         else:
                             board.change_field(i, self.team)
                             run = False
