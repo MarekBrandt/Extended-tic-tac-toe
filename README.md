@@ -32,4 +32,5 @@ Player chooses field. Then computer calculates his move based on minimax or my a
 SCREENSHOTS
 -----------
 
-![img.png](screenshot/img.png)![img2.png](screenshot/img.png)
+![img.png](screenshot/img.png)
+![img2.png](screenshot/img2.png)
