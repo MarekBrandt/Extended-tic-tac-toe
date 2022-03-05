@@ -1,36 +1,35 @@
-# Extended board Tic-tac-toe with AI
-Game tic-tac-toe with larger boards made in python, using pygame.
+CONTENTS OF THIS FILE
+---------------------
 
-AI can use minimax with alpha beta pruning algorithm.
-## Purpose of the project
-I wanted to practice using git and learn python, so I came
-up with this project.
+ * Introduction
+ * Game modes
+ * Requirements
+ * Installation
+ * Configuration
+ * Screenshots
+ 
+INTRODUCTION
+------------
 
-## Project assumptions
-I wanted to make a game that would run on command line
-and then turn it into a windowed version using pygame.
+Circle and cross is a simple game written in python using pygame. 
+The player can choose the board size from 3x3 to 10x10, window size and victory condition. 
+The project was created to learn python and pygame. 
+It was used to implement the minimax algorithm with alpha beta pruning.
 
-## About game
-This is an **extended** version of the 3x3 tic-tac-toe game.
-## Board
-In my game, the player can choose a **board size** from 3x3 to 
-10x10. Only square boards are available.
+GAME MODES
+----------
 
-Player can also choose the number of x or o's **in the line**
-needed to win. The allowed values are in the range 3 to 10.
-## Game modes
-There are two ways to play: player vs player or player vs AI.
-Starting player is always drawn at the start of the round.
-### Player vs player
+* Player vs player  
 Two players take turns choosing a square.
-### Player vs AI
-Player chooses field. Then computer calculates his move based on:
-- **Minimax with alpha beta prune algorithm** written on the
- basis of [Code train](https://www.youtube.com/watch?v=trKjYdBASyQ&t=1054s)
- and [Stack Abuse article](https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/)
-- **My algorithm**, that check the possibility of winning or losing in a few moves.
-If there is no one, it chooses field at random.
+* Player vs AI   
+Player chooses field. Then computer calculates his move based on minimax or my algorithm.
 
-**Algorithms is selected based on the size of the board. 
-For the 3x3 board it will choose minimax,
-and for larger boards it will choose my algorithm.**
+| Board size  | Used algorithm                  | Algorithm description                                                                       | Sources I used                                                                                                                                        |
+|-------------|---------------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 3x3         | Minimax with alpha beta pruning | [Minimax with alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) | [Stack Abuse]( https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/)   <br/> [Code train](https://www.youtube.com/watch?v=trKjYdBASyQ&t=1054s) |
+| 4x4 - 10x10 | My algorithm                    | Plays randomly unless player or computer can win in 2 moves                                 |                                                                                                                                                       |
+
+SCREENSHOTS
+-----------
+
+![img.png](screenshot/img.png)![img2.png](screenshot/img.png)

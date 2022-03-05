@@ -18,8 +18,6 @@ class Board:
         for _ in range(size * size):
             self.board_list.append(field_markings.index('empty'))
 
-
-
         # only fraction of height, cause top of the screen is place to show messages
         HEIGHT2 = 0.9 * constants.HEIGHT
         board_width = 0.8 * min(constants.HEIGHT, HEIGHT2)
@@ -29,7 +27,6 @@ class Board:
         self.rectangles = []
 
         x_offset = constants.WIDTH / 2 - board_width / 2
-        print("jestem liczony a widht wynosi" + str(constants.WIDTH))
         y_offset = -HEIGHT2 / 2 - board_width / 2 + constants.HEIGHT
 
         for i in range(self.size):
