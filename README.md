@@ -4,8 +4,6 @@ CONTENTS OF THIS FILE
  * Introduction
  * Game modes
  * Requirements
- * Installation
- * Configuration
  * Screenshots
  
 INTRODUCTION
@@ -28,6 +26,10 @@ Player chooses field. Then computer calculates his move based on minimax or my a
 |-------------|---------------------------------|---------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 3x3         | Minimax with alpha beta pruning | [Minimax with alpha beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) | [Stack Abuse]( https://stackabuse.com/minimax-and-alpha-beta-pruning-in-python/)   <br/> [Code train](https://www.youtube.com/watch?v=trKjYdBASyQ&t=1054s) |
 | 4x4 - 10x10 | My algorithm                    | Plays randomly unless player or computer can win in 2 moves                                 |                                                                                                                                                       |
+REQUIREMENTS
+------------
+
+PyGame
 
 SCREENSHOTS
 -----------
